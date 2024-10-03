@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Domain.Interfaces;
+using Domain.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Application
