@@ -36,7 +36,7 @@ namespace Domain.Services
             if (password.Contains(" "))
                 errors.Add("The password cannot contain spaces.");
 
-            if (password.Distinct().Count() != password.Length)
+            if (password.ToUpper().Distinct().Count() != password.Length)
                 errors.Add("The password cannot contain repeated characters.");
 
             if (!password.All(ch => char.IsLetterOrDigit(ch) || _allowedSpecialChars.Contains(ch)))
