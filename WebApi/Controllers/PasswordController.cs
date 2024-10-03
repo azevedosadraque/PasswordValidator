@@ -1,6 +1,7 @@
 ﻿using Application.Request.ValidatePassword;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebApi.Controllers
 {
@@ -16,6 +17,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("validate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(Summary = "Validates the provided password", Description = "Receives a password and validates if it meets security criteria.")]
         public async Task<IActionResult> Validate([FromBody] string password)
         {
             if (string.IsNullOrEmpty(password))
