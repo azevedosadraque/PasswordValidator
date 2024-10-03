@@ -1,10 +1,12 @@
 using System.Reflection;
 using Application;
 using Domain;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -26,6 +28,12 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddAplicationServices();
 builder.Services.AddDomainServices();
 
+builder.Services.AddHealthChecks()
+    .AddCheck("API_Health_Check", () =>
+    {
+        return HealthCheckResult.Healthy("API is running.");
+    });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -39,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
+app.MapHealthChecks("/health");
 
 app.MapControllers();
 
