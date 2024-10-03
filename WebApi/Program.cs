@@ -1,5 +1,6 @@
 using System.Reflection;
 using Application;
+using Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddMediatR(cfg =>
 });
 
 builder.Services.AddAplicationServices();
+builder.Services.AddDomainServices();
 
 var app = builder.Build();
 
