@@ -7,10 +7,5 @@ namespace Domain.Entities
         public string Value { get; private set; }
 
         public Password(string value) => Value = value;
-
-        public bool IsValid(IPasswordValidator validator)
-        {
-            return validator.IsValid(Value);
-        }
     }
 }
