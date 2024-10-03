@@ -9,12 +9,12 @@ namespace Domain.Services
 
         public ValidationPasswordDto Validate(string password)
         {
-            var errors = Validate(password);
+            var errors = GetErrors(password);
 
             return new ValidationPasswordDto(errors, errors.Count == 0);
         }
 
-        public List<string> Validate(string password)
+        private List<string> GetErrors(string password)
         {
             List<string> errors = new List<string>();
 
