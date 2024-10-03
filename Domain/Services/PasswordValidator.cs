@@ -22,7 +22,7 @@ namespace Domain.Services
                 errors.Add("A senha deve ter no mínimo 8 caracteres.");
 
             if (!password.Any(char.IsUpper))
-                errors.Add(".");
+                errors.Add("A senha deve conter pelo menos uma letra maiúscula.");
 
             if (!password.Any(char.IsLower))
                 errors.Add("A senha deve conter pelo menos uma letra minúscula.");
