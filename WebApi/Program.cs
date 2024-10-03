@@ -1,4 +1,5 @@
 using System.Reflection;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
 });
+
+builder.Services.AddAplicationServices();
 
 var app = builder.Build();
 
