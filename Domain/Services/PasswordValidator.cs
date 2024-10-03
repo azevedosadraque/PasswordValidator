@@ -1,4 +1,6 @@
-﻿namespace Domain.Interfaces
+﻿using Domain.Interfaces;
+
+namespace Domain.Services
 {
     public class PasswordValidator : IPasswordValidator
     {
