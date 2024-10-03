@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Common.Dto;
+using Domain.Interfaces;
 
 namespace Domain.Services
 {
@@ -6,9 +7,11 @@ namespace Domain.Services
     {
         private readonly string _allowedSpecialChars = "!@#$%^&*()-+";
 
-        public bool IsValid(string password)
+        public ValidationPasswordDto IsValid(string password)
         {
-            return Validate(password).Count == 0;
+            var errors = Validate(password);
+
+            return new ValidationPasswordDto(errors, errors.Count == 0);
         }
 
         public List<string> Validate(string password)

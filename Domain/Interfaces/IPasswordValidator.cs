@@ -1,7 +1,9 @@
-﻿namespace Domain.Interfaces
+﻿using Domain.Common.Dto;
+
+namespace Domain.Interfaces
 {
     public interface IPasswordValidator
     {
-        bool IsValid(string password);
+        ValidationPasswordDto IsValid(string password);
     }
 }

@@ -1,24 +1,45 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Request.ValidatePassword
 {
     public class ValidatePasswordRequestHandler : IRequestHandler<ValidatePasswordRequest, bool>
     {
         private readonly IPasswordValidator _passwordValidator;
+        private readonly ILogger<ValidatePasswordRequestHandler> _logger;
 
-        public ValidatePasswordRequestHandler(IPasswordValidator passwordValidator)
+        public ValidatePasswordRequestHandler(IPasswordValidator passwordValidator, 
+                                              ILogger<ValidatePasswordRequestHandler> logger)
         {
             _passwordValidator = passwordValidator;
+            _logger = logger;
         }
 
         public Task<bool> Handle(ValidatePasswordRequest request, CancellationToken cancellationToken)
         {
-            var password = new Password(request.Password);
-            var isValid = _passwordValidator.IsValid(password.Value);
+            try
+            {
+                _logger.LogInformation("Starting password validation for user request at {Time}", DateTime.UtcNow);
 
-            return Task.FromResult(isValid);
+                var validationResult = _passwordValidator.IsValid(request.Password);
+
+                if (!validationResult.IsValid)
+                {
+                    _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", DateTime.UtcNow, validationResult.Errors);
+                    return Task.FromResult(validationResult.IsValid);
+                }
+
+                _logger.LogWarning("Password validation succeded at {Time}", DateTime.UtcNow);
+
+                return Task.FromResult(validationResult.IsValid);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while validanting the password at {Time}", DateTime.UtcNow);
+                return Task.FromResult(false);
+            }
         }
     }
 }
