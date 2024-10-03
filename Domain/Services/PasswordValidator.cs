@@ -7,7 +7,7 @@ namespace Domain.Services
     {
         private readonly string _allowedSpecialChars = "!@#$%^&*()-+";
 
-        public ValidationPasswordDto IsValid(string password)
+        public ValidationPasswordDto Validate(string password)
         {
             var errors = Validate(password);
 
@@ -19,28 +19,28 @@ namespace Domain.Services
             List<string> errors = new List<string>();
 
             if (string.IsNullOrEmpty(password) || password.Length < 8)
-                errors.Add("A senha deve ter no mínimo 8 caracteres.");
+                errors.Add("The password must be at least 8 characters long.");
 
             if (!password.Any(char.IsUpper))
-                errors.Add("A senha deve conter pelo menos uma letra maiúscula.");
+                errors.Add("The password must contain at least one uppercase letter.");
 
             if (!password.Any(char.IsLower))
-                errors.Add("A senha deve conter pelo menos uma letra minúscula.");
+                errors.Add("The password must contain at least one lowercase letter.");
 
             if (!password.Any(char.IsDigit))
-                errors.Add("A senha deve conter pelo menos um número.");
+                errors.Add("The password must contain at least one number.");
 
             if (!password.Any(ch => _allowedSpecialChars.Contains(ch)))
-                errors.Add($"A senha deve conter um pelo menos um dos seguintes caracteres especiais: {_allowedSpecialChars}");
+                errors.Add($"The password must contain at least one of the following special characters: {_allowedSpecialChars}");
 
             if (password.Contains(" "))
-                errors.Add("A senha não pode conter espaços em branco");
+                errors.Add("The password cannot contain spaces.");
 
             if (password.Distinct().Count() != password.Length)
-                errors.Add("A senha não pode conter caracteres repetidos.");
+                errors.Add("The password cannot contain repeated characters.");
 
             if (!password.All(ch => char.IsLetterOrDigit(ch) || _allowedSpecialChars.Contains(ch)))
-                errors.Add($"A senha contém caracteres inválidos. Apenas letras, números e os caracteres especiais {_allowedSpecialChars} são permitidos");
+                errors.Add($"The password contains invalid characters. Only letters, numbers, and the special characters {_allowedSpecialChars} are allowed.");
 
             return errors;
         }

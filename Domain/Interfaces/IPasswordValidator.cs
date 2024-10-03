@@ -4,6 +4,6 @@ namespace Domain.Interfaces
 {
     public interface IPasswordValidator
     {
-        ValidationPasswordDto IsValid(string password);
+        ValidationPasswordDto Validate(string password);
     }
 }

@@ -19,27 +19,19 @@ namespace Application.Request.ValidatePassword
 
         public Task<bool> Handle(ValidatePasswordRequest request, CancellationToken cancellationToken)
         {
-            try
+            _logger.LogInformation("Starting password validation for user request at {Time}", DateTime.UtcNow);
+
+            var validationResult = _passwordValidator.Validate(request.Password);
+
+            if (!validationResult.IsValid)
             {
-                _logger.LogInformation("Starting password validation for user request at {Time}", DateTime.UtcNow);
-
-                var validationResult = _passwordValidator.IsValid(request.Password);
-
-                if (!validationResult.IsValid)
-                {
-                    _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", DateTime.UtcNow, validationResult.Errors);
-                    return Task.FromResult(validationResult.IsValid);
-                }
-
-                _logger.LogWarning("Password validation succeded at {Time}", DateTime.UtcNow);
-
+                _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", DateTime.UtcNow, validationResult.Errors);
                 return Task.FromResult(validationResult.IsValid);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while validanting the password at {Time}", DateTime.UtcNow);
-                return Task.FromResult(false);
-            }
+
+            _logger.LogWarning("Password validation succeded at {Time}", DateTime.UtcNow);
+
+            return Task.FromResult(validationResult.IsValid);
         }
     }
 }
