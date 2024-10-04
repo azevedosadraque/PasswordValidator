@@ -20,17 +20,17 @@ namespace Application.Request.ValidatePassword
         {
             _logger.LogInformation("Starting password validation for user request at {Time}", DateTime.UtcNow);
 
-            var validationResult = _passwordValidator.Validate(request.Password);
+            var passwordValidatorResult = _passwordValidator.Validate(request.Password);
 
-            if (!validationResult.IsValid)
+            if (!passwordValidatorResult.IsValid)
             {
-                _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", DateTime.UtcNow, validationResult.Errors);
-                return Task.FromResult(validationResult.IsValid);
+                _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", DateTime.UtcNow, passwordValidatorResult.Errors);
+                return Task.FromResult(passwordValidatorResult.IsValid);
             }
 
             _logger.LogWarning("Password validation succeded at {Time}", DateTime.UtcNow);
 
-            return Task.FromResult(validationResult.IsValid);
+            return Task.FromResult(passwordValidatorResult.IsValid);
         }
     }
 }
