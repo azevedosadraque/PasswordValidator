@@ -1,5 +1,5 @@
-﻿using Domain.Common.Dto;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
+using Domain.ValueObjects;
 
 namespace Domain.Services
 {
@@ -7,16 +7,16 @@ namespace Domain.Services
     {
         private readonly string _allowedSpecialChars = "!@#$%^&*()-+";
 
-        public ValidationPasswordDto Validate(string password)
+        public PasswordValidatorResult Validate(string password)
         {
             var errors = GetErrors(password);
 
-            return new ValidationPasswordDto(errors, errors.Count == 0);
+            return new PasswordValidatorResult(errors.Count == 0, errors);
         }
 
         private List<string> GetErrors(string password)
         {
-            List<string> errors = new List<string>();
+            List<string> errors = [];
 
             if (string.IsNullOrEmpty(password) || password.Length < 8)
                 errors.Add("The password must be at least 8 characters long.");

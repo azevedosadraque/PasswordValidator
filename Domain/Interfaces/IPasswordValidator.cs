@@ -1,9 +1,11 @@
-﻿using Domain.Common.Dto;
+﻿
+
+using Domain.ValueObjects;
 
 namespace Domain.Interfaces
 {
     public interface IPasswordValidator
     {
-        ValidationPasswordDto Validate(string password);
+        PasswordValidatorResult Validate(string password);
     }
 }
