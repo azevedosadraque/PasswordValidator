@@ -1,14 +1,10 @@
-﻿using MediatR;
+﻿using Domain.ValueObjects;
+using MediatR;
 
 namespace Application.Request.ValidatePassword
 {
-    public class ValidatePasswordRequest : IRequest<bool>
+    public class ValidatePasswordRequest(string password) : IRequest<PasswordValidatorResult>
     {
-        public string Password { get; private set; }
-
-        public ValidatePasswordRequest(string password)
-        {
-            Password = password;
-        }
+        public string Password { get; private set; } = password;
     }
 }

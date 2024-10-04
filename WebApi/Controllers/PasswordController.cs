@@ -1,14 +1,15 @@
 ﻿using Application.Request.ValidatePassword;
+using Domain.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using WebApi.Controllers.Base;
 using WebApi.Dto;
+using WebApi.Responses;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class PasswordController : ControllerBase
+    public class PasswordController : ApiController
     {
         private readonly IMediator _mediator;
 
@@ -23,13 +24,13 @@ namespace WebApi.Controllers
         [SwaggerOperation(Summary = "Validates the provided password", Description = "Receives a password and validates if it meets security criteria.")]
         public async Task<IActionResult> Validate([FromBody] ValidatePasswordDto validatePassword)
         {
-            if (string.IsNullOrEmpty(validatePassword.Password))
-                return BadRequest("Password cannot be null or empty.");
+            var validationParametersResult = ValidateModelState();
+            if (validationParametersResult is not null) return validationParametersResult;
 
             var request = new ValidatePasswordRequest(validatePassword.Password);
-            var isValid = await _mediator.Send(request);
+            var result = await _mediator.Send(request);
 
-            return Ok(isValid);
+            return Ok(new ApiResponse<PasswordValidatorResult>(result));
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Domain.Interfaces;
+using Domain.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Request.ValidatePassword
 {
-    public class ValidatePasswordRequestHandler : IRequestHandler<ValidatePasswordRequest, bool>
+    public class ValidatePasswordRequestHandler : IRequestHandler<ValidatePasswordRequest, PasswordValidatorResult>
     {
         private readonly IPasswordValidator _passwordValidator;
         private readonly ILogger<ValidatePasswordRequestHandler> _logger;
@@ -16,21 +17,25 @@ namespace Application.Request.ValidatePassword
             _logger = logger;
         }
 
-        public Task<bool> Handle(ValidatePasswordRequest request, CancellationToken cancellationToken)
+        public Task<PasswordValidatorResult> Handle(ValidatePasswordRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Starting password validation for user request at {Time}", DateTime.UtcNow);
 
             var passwordValidatorResult = _passwordValidator.Validate(request.Password);
 
-            if (!passwordValidatorResult.IsValid)
-            {
-                _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", DateTime.UtcNow, passwordValidatorResult.Errors);
-                return Task.FromResult(passwordValidatorResult.IsValid);
-            }
+            LogginValidationResult(passwordValidatorResult);
 
-            _logger.LogWarning("Password validation succeded at {Time}", DateTime.UtcNow);
+            return Task.FromResult(passwordValidatorResult);
+        }
 
-            return Task.FromResult(passwordValidatorResult.IsValid);
+        private void LogginValidationResult(PasswordValidatorResult passwordValidatorResult)
+        {
+            var dateTimeUtcNow = DateTime.UtcNow;
+
+            if (passwordValidatorResult.IsValid)
+                _logger.LogWarning("Password validation succeded at {Time}", dateTimeUtcNow);
+            else 
+                _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", dateTimeUtcNow, passwordValidatorResult.Errors);
         }
     }
 }

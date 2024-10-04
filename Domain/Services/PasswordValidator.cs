@@ -33,7 +33,7 @@ namespace Domain.Services
             if (!password.Any(ch => _allowedSpecialChars.Contains(ch)))
                 errors.Add($"The password must contain at least one of the following special characters: {_allowedSpecialChars}");
 
-            if (password.Contains(" "))
+            if (password.Contains(' '))
                 errors.Add("The password cannot contain spaces.");
 
             if (password.ToUpper().Distinct().Count() != password.Length)
