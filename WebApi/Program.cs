@@ -4,60 +4,63 @@ using Application;
 using Domain;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-public class Program
+namespace WebApi
 {
-    [ExcludeFromCodeCoverage]
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddControllers();
-
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(options =>
+        [ExcludeFromCodeCoverage]
+        public static void Main(string[] args)
         {
-            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+            var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
             {
-                Title = "API",
-                Version = "v1",
-                Description = "Password API",
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "API",
+                    Version = "v1",
+                    Description = "Password API",
+                });
+
+                options.EnableAnnotations();
             });
 
-            options.EnableAnnotations();
-        });
-
-        builder.Services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
-        });
-
-        builder.Services.AddAplicationServices();
-        builder.Services.AddDomainServices();
-
-        builder.Services.AddHealthChecks()
-            .AddCheck("API_Health_Check", () =>
+            builder.Services.AddMediatR(cfg =>
             {
-                return HealthCheckResult.Healthy("API is running.");
+                cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
             });
 
-        var app = builder.Build();
+            builder.Services.AddAplicationServices();
+            builder.Services.AddDomainServices();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            builder.Services.AddHealthChecks()
+                .AddCheck("API_Health_Check", () =>
+                {
+                    return HealthCheckResult.Healthy("API is running.");
+                });
+
+            var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Password API v1");
-                c.RoutePrefix = string.Empty;
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Password API v1");
+                    c.RoutePrefix = string.Empty;
+                });
+            }
+
+            app.UseRouting();
+
+            app.MapHealthChecks("/health");
+
+            app.MapControllers();
+
+            app.Run();
         }
-
-        app.UseRouting();
-
-        app.MapHealthChecks("/health");
-
-        app.MapControllers();
-
-        app.Run();
     }
 }
