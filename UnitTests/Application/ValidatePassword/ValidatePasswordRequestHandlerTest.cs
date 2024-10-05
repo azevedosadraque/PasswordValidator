@@ -86,7 +86,7 @@ namespace UnitTests.Application.ValidatePassword
             var passwordValidatorResult = new PasswordValidatorResult(true, []);
 
             _passwordValidatorMock
-                .Setup(pv => pv.Validate(password))
+                .Setup(passwordValidator => passwordValidator.Validate(password))
                 .Returns(passwordValidatorResult);
 
             // Act
