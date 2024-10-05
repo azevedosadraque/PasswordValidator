@@ -7,7 +7,7 @@ using WebApi;
 using WebApi.Dto;
 using WebApi.Responses;
 
-namespace AcceptanceTest.Steps
+namespace AcceptanceTests.Steps
 {
 
     [Binding]
