@@ -33,7 +33,7 @@ namespace Application.Request.ValidatePassword
             var dateTimeUtcNow = DateTime.UtcNow;
 
             if (passwordValidatorResult.IsValid)
-                _logger.LogWarning("Password validation succeded at {Time}", dateTimeUtcNow);
+                _logger.LogInformation("Password validation succeded");
             else 
                 _logger.LogWarning("Password validation failed at {Time}. Errors: {errors}", dateTimeUtcNow, passwordValidatorResult.Errors);
         }
