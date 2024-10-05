@@ -21,6 +21,7 @@ namespace WebApi.Controllers
         [HttpPost("validate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(Summary = "Validates the provided password", Description = "Receives a password and validates if it meets security criteria.")]
         public async Task<IActionResult> Validate([FromBody] ValidatePasswordDto validatePassword)
         {
