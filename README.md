@@ -31,7 +31,7 @@ Aqui estão alguns exemplos de requisições para validar uma senha:
 curl -X POST "http://localhost:5000/api/password/validate" -H "Content-Type: application/json" -d "{\"password\":\"AbTp9!fok\"}"
 ```
 
-### Swagger
+#### Swagger
 
 Para acessar o Swagger no ambiente de desenvolvimento, basta executar a aplicação, e a página será redirecionada automaticamente
 
@@ -42,17 +42,17 @@ Para rodar os testes:
 ```bash
 dotnet test
 ```
-### Testes com Cobertura de Código
+#### Testes com Cobertura de Código
 Para rodar os testes com cobertura de código, execute o script generate_coverage_report.ps1 dentro da pasta .\PasswordValidator\UnitTests:
 .\PasswordValidator\UnitTests\generate_coverage_report.ps1
 
-# Relatório de Tomada de Decisão de Desenvolvimento
+## Relatório de Tomada de Decisão de Desenvolvimento
 
-## Criação e Estruturação Inicial (Commit 1 ao Commit 2)
+### Criação e Estruturação Inicial (Commit 1 ao Commit 2)
 
 - Criei o repositório para o projeto e, em seguida, estruturei a solução seguindo os padrões de **Domain-Driven Design (DDD)**. Essa organização ajuda a separar claramente as camadas de **Domain**, **Application**, **Infrastructure** e **Presentation**, facilitando a manutenibilidade e escalabilidade.
 
-## Desenvolvimento e Implementação das Regras de Validação (Commit 3 ao Commit 6)
+### Desenvolvimento e Implementação das Regras de Validação (Commit 3 ao Commit 6)
 
 - Adicionei o pacote **xUnit** para garantir uma cobertura de testes robusta.
   
@@ -62,7 +62,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Reorganizei a localização do `PasswordValidator`, movendo-o do namespace de **interface** para o namespace de **service**, refletindo melhor sua responsabilidade no projeto.
 
-## Refatorações Baseadas em Princípios SOLID (Commit 7 ao Commit 11)
+### Refatorações Baseadas em Princípios SOLID (Commit 7 ao Commit 11)
 
 - Criei a `PasswordController`, o `ValidatePasswordRequest`, e o `ValidatePasswordRequestHandler` como esqueleto, preparando a camada de apresentação para as validações de senha, mas sem implementar as funcionalidades nesse momento.
 
@@ -74,7 +74,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Removi um bloco de `try-catch`, já que, neste cenário, não há integrações com banco de dados ou outras dependências que justifiquem o tratamento de exceções.
 
-## Configurações de MediatR e Dependency Injection (Commit 12 ao Commit 15)
+### Configurações de MediatR e Dependency Injection (Commit 12 ao Commit 15)
 
 - Configurei o **MediatR** e implementei **Dependency Injection**. A escolha do **MediatR** foi feita para desacoplar a camada de aplicação da controller, permitindo uma melhor separação de responsabilidades e facilitando testes e manutenção futura.
 
@@ -84,7 +84,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Adicionei a configuração de injeção de dependências no arquivo `Program.cs`, garantindo que todas as dependências fossem resolvidas corretamente.
 
-## Ajustes e Melhorias de Feedback (Commit 16 ao Commit 19)
+### Ajustes e Melhorias de Feedback (Commit 16 ao Commit 19)
 
 - Configurei o **Swagger UI** para documentar a API, facilitando o teste e a compreensão da API por outros desenvolvedores ou stakeholders.
 
@@ -94,7 +94,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Corrigi a validação de caracteres repetidos, ajustando o código para que ele tratasse letras maiúsculas e minúsculas como o mesmo caractere, conforme as regras de validação.
 
-## Feedback Mais Detalhado e Melhor Organização (Commit 20 ao Commit 23)
+### Feedback Mais Detalhado e Melhor Organização (Commit 20 ao Commit 23)
 
 - Criei um **Value Object** para encapsular as informações de senha e expô-las corretamente na camada de aplicação, em vez de utilizar diretamente um **DTO** na camada de domínio, corrigindo uma violação de estrutura.
 
@@ -104,7 +104,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Removi a entidade `Password`, pois com a refatoração para usar o `PasswordValidator`, a entidade não era mais necessária.
 
-## Testes e Cobertura (Commit 24 ao Commit 28)
+### Testes e Cobertura (Commit 24 ao Commit 28)
 
 - Adicionei testes para a `PasswordController` e criei um script para executar a cobertura dos testes com **Coverlet**. Além disso, separei os métodos de **ApiResponse** em dois — um para sucesso e outro para erros — evitando ambiguidades nos parâmetros genéricos.
 
@@ -116,7 +116,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Adicionei a [ProducesResponseType(StatusCodes.Status500InternalServerError)] annotation no endpoint.
 
-## Configuração do ReadMe (Commit 29 pra frente)
+### Configuração do ReadMe (Commit 29 pra frente)
 
 - Configurei o arquivo `README.md` para incluir informações relevantes sobre o projeto, como:
 
@@ -126,7 +126,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
   - **Relatórios de Testes e Cobertura**: Incluí instruções sobre como rodar os testes unitários com o **xUnit** e gerar relatórios de cobertura usando o **Coverlet**, além de mostrar como acessar esses relatórios para verificar a qualidade do código.
 
-## Conclusão
+### Conclusão
 
-Durante o desenvolvimento da API de validação de senhas, segui os princípios de **SOLID**, **Clean Code** e **DDD**, priorizando a flexibilidade, manutenibilidade e escalabilidade. A implementação do **MediatR** e a separação das responsabilidades através de interfaces e classes dedicadas tornaram o código mais testável e preparado para futuras manutenções. Além disso, a decisão de fornecer feedbacks mais detalhados sobre falhas de validação melhora significativamente a experiência do usuário final. A API foi desenvolvida de maneira robusta e está pronta para eventuais evoluções e ajustes futuros.
+Durante o desenvolvimento da API de validação de senhas, segui os princípios de **SOLID**, **Clean Code** e **DDD**, priorizando a flexibilidade e manutenibilidade. A implementação do **MediatR** e a separação das responsabilidades através de interfaces e classes dedicadas tornaram o código mais testável e preparado para futuras manutenções. Além disso, a decisão de fornecer feedbacks mais detalhados sobre falhas de validação melhora significativamente a experiência do usuário final. A API foi desenvolvida de maneira robusta e está pronta para eventuais evoluções e ajustes futuros.
 
