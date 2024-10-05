@@ -122,7 +122,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
   - **Instruções de Execução**: Descrevi os passos necessários para executar a aplicação localmente, incluindo os pré-requisitos, instalação de dependências e comandos para rodar o projeto, facilitando a reprodução por outros desenvolvedores.
   
-  - **Documentação da API**: Adicionei uma seção detalhando os endpoints expostos pela API, explicando como utilizá-los e mostrando exemplos de requisições e respostas, especialmente no que diz respeito à validação de senha. Também incluí links para o **Swagger UI** para que a API possa ser testada diretamente por meio da interface gráfica.
+  - **Documentação da API**: Adicionei uma seção detalhando o endpoint exposto pela API, explicando como utilizá-lo. Também incluí links para o **Swagger UI** para que a API possa ser testada diretamente por meio da interface gráfica.
 
   - **Relatórios de Testes e Cobertura**: Incluí instruções sobre como rodar os testes unitários com o **xUnit** e gerar relatórios de cobertura usando o **Coverlet**, além de mostrar como acessar esses relatórios para verificar a qualidade do código.
 
