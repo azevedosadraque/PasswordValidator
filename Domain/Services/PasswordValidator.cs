@@ -18,7 +18,7 @@ namespace Domain.Services
         {
             List<string> errors = [];
 
-            if (string.IsNullOrEmpty(password) || password.Length < 8)
+            if (password.Length < 8)
                 errors.Add("The password must be at least 8 characters long.");
 
             if (!password.Any(char.IsUpper))
