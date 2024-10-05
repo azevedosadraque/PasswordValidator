@@ -43,8 +43,7 @@ Para rodar os testes:
 dotnet test
 ```
 #### Testes com Cobertura de Código
-Para rodar os testes com cobertura de código, execute o script generate_coverage_report.ps1 dentro da pasta .\PasswordValidator\UnitTests:
-.\PasswordValidator\UnitTests\generate_coverage_report.ps1
+Para rodar os testes com cobertura de código, execute o script generate_coverage_report.ps1 dentro da pasta .\PasswordValidator\UnitTests
 
 ## Relatório de Tomada de Decisão de Desenvolvimento
 
