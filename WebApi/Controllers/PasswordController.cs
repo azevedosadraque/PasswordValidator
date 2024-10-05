@@ -24,13 +24,20 @@ namespace WebApi.Controllers
         [SwaggerOperation(Summary = "Validates the provided password", Description = "Receives a password and validates if it meets security criteria.")]
         public async Task<IActionResult> Validate([FromBody] ValidatePasswordDto validatePassword)
         {
-            var validationParametersResult = ValidateModelState();
-            if (validationParametersResult is not null) return validationParametersResult;
+            try
+            {
+                var validationParametersResult = ValidateModelState();
+                if (validationParametersResult is not null) return validationParametersResult;
 
-            var request = new ValidatePasswordRequest(validatePassword.Password);
-            var result = await _mediator.Send(request);
+                var request = new ValidatePasswordRequest(validatePassword.Password);
+                var result = await _mediator.Send(request);
 
-            return Ok(new ApiResponse<PasswordValidatorResult>(result));
+                return Ok(new ApiResponseSuccess<PasswordValidatorResult>(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }
