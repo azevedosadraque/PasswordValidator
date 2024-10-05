@@ -42,8 +42,14 @@ Para rodar os testes:
 ```bash
 dotnet test
 ```
-#### Testes com Cobertura de Código
+#### Testes Unitários com Cobertura de Código
 Para rodar os testes com cobertura de código, execute o script generate_coverage_report.ps1 dentro da pasta .\PasswordValidator\UnitTests
+
+#### Testes de Integração com Cobertura de Código
+Para rodar os testes com cobertura de código, execute o script generate_coverage_report.ps1 dentro da pasta .\PasswordValidator\IntegrationTests 
+
+#### Testes de Aceitação com Cobertura de Código
+Para rodar os testes com cobertura de código, execute o script generate_coverage_report.ps1 dentro da pasta .\PasswordValidator\AcceptanceTests
 
 ## Relatório de Tomada de Decisão de Desenvolvimento
 
@@ -115,7 +121,7 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
 
 - Adicionei a [ProducesResponseType(StatusCodes.Status500InternalServerError)] annotation no endpoint.
 
-### Configuração do ReadMe (Commit 29 pra frente)
+### Configuração do ReadMe (Commit 29 ao Commit 32)
 
 - Configurei o arquivo `README.md` para incluir informações relevantes sobre o projeto, como:
 
@@ -124,6 +130,17 @@ Para rodar os testes com cobertura de código, execute o script generate_coverag
   - **Documentação da API**: Adicionei uma seção detalhando o endpoint exposto pela API, explicando como utilizá-lo. Também incluí links para o **Swagger UI** para que a API possa ser testada diretamente por meio da interface gráfica.
 
   - **Relatórios de Testes e Cobertura**: Incluí instruções sobre como rodar os testes unitários com o **xUnit** e gerar relatórios de cobertura usando o **Coverlet**, além de mostrar como acessar esses relatórios para verificar a qualidade do código.
+
+### Testes de Integração e Aceitação (Commit 33 ao Commit 36)
+
+- Implementei testes de integração para validar a funcionalidade de ponta a ponta da API.
+- Criei um script para gerar relatórios de cobertura no projeto de integração.
+- Adicionei testes de aceitação para garantir que o comportamento do sistema correspondesse aos requisitos de negócio, incluindo cenários do mundo real.
+- Renomeei os projetos de IntegrationTest e AcceptanceTest para **IntegrationTests** e **AcceptanceTests**.
+
+### Atualização do README (Commit 37 em diante)
+
+- Atualizei o `README.md` com informações adicionais após a conclusão dos testes de integração e aceitação.
 
 ### Conclusão
 
